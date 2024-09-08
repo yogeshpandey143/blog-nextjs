@@ -1,9 +1,4 @@
 import Link from "next/link"
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
-
-import { cn } from "@/lib/utils";
 import { Spotlight } from "@/Components/ui/Spotlight"
 import { Button } from "@/Components/ui/moving-border";
 function HeroSection() {

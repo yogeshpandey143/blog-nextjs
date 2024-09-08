@@ -10,7 +10,7 @@ interface Post {
 }
 
 const page = () => {
-  const [post, setPost] = useState<Post | null>(null);
+  const [post, setPost] = useState < Post | null >(null);
   const router = useRouter();
   const { id } = router.query;  // Extract id from the URL
 

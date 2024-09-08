@@ -1,35 +1,10 @@
 const express = require("express");
 const app = express();
-
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const db = require('./database');
+
 app.use(cors({ origin: 'http://localhost:3000' })); // Allow requests from Next.js frontend
-app.use(express.json());
-
-const db = require('./database');
-
-
-
-app.use(cors());
-app.use(bodyParser.json());
-
-
-const db = new sqlite3.Database('./blog.db', (err) => {
-  if (err) {
-    console.error('Error opening database:', err.message);
-  }
-});
-
-// Create posts table
-db.run(`CREATE TABLE IF NOT EXISTS posts (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  title TEXT NOT NULL,
-  content TEXT NOT NULL
-)`);
-
-
-
+app.use(express.json()); // Parse incoming JSON requests
 
 // API Endpoints
 
@@ -52,6 +27,9 @@ app.get('/posts/:id', (req, res) => {
       res.status(500).json({ error: err.message });
       return;
     }
+    if (!row) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
     res.json(row);
   });
 });
@@ -60,8 +38,7 @@ app.get('/posts/:id', (req, res) => {
 app.post('/posts', (req, res) => {
   const { title, content } = req.body;
   if (!title || !content) {
-    res.status(400).json({ error: 'Title and content are required' });
-    return;
+    return res.status(400).json({ error: 'Title and content are required' });
   }
 
   const query = 'INSERT INTO posts (title, content) VALUES (?, ?)';
@@ -70,7 +47,7 @@ app.post('/posts', (req, res) => {
       res.status(500).json({ error: err.message });
       return;
     }
-    res.json({ id: this.lastID });
+    res.status(201).json({ id: this.lastID });
   });
 });
 
