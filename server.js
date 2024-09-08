@@ -1,8 +1,14 @@
 const express = require("express");
 const app = express();
-const sqlite3 = require('sqlite3').verbose();
+
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const db = require('./database');
+app.use(cors({ origin: 'http://localhost:3000' })); // Allow requests from Next.js frontend
+app.use(express.json());
+
+const db = require('./database');
+
 
 
 app.use(cors());

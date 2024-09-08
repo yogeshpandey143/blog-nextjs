@@ -1,63 +1,36 @@
-
-'use client'
-import Image from "next/image";
-import React from "react";
-import { CardBody, CardContainer, CardItem } from "@/Components/ui/3d-card";
-import courseData from "@/Data/blogs_course.json"
-import { useState, useEffect } from 'react';
+'use client';  // Ensures the component is client-side only
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 
-function page() {
-
-
-
-
-
-
-
-  return (
-    <div className="min-h-screen bg-black py-12 pt-36">
-        <h1 className="text-lg md:text-7xl text-center font-sans font-bold mb-8 text-white">All courses ({courseData.courses.length})</h1>  
-        <div className="flex flex-wrap justify-center">
-            {courseData.courses.map((course) => (
-                <CardContainer className="inter-var m-4">
-                <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
-                  <CardItem
-                    translateZ="50"
-                    className="text-xl font-bold text-neutral-600 dark:text-white"
-                  >
-                    {course.title}
-                  </CardItem>
-                  <CardItem
-                    as="p"
-                    translateZ="60"
-                    className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
-                  >
-                    {course.description}
-                  </CardItem>
-           
-                  <div className="flex justify-between items-center mt-20">
-                    <CardItem
-                      translateZ={20}
-                      as="button"
-                      className="px-4 py-2 rounded-xl text-xs font-normal  bg-black dark:bg-white dark:text-black text-white "
-                    >
-                      Update now →
-                    </CardItem>
-                    <CardItem
-                      translateZ={20}
-                      as="button"
-                      className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
-                    >
-                      Delete Blog
-                    </CardItem>
-                  </div>
-                </CardBody>
-              </CardContainer>
-            ))}
-        </div>  
-    </div>
-  )
+interface Post {
+  id: number;
+  title: string;
+  content: string;
 }
 
-export default page
+const page = () => {
+  const [post, setPost] = useState<Post | null>(null);
+  const router = useRouter();
+  const { id } = router.query;  // Extract id from the URL
+
+  useEffect(() => {
+    if (id) {
+      // Assuming your backend is on localhost:3001, adjust the API path if necessary
+      axios.get(`http://localhost:3001/posts/${id}`)
+        .then((res) => setPost(res.data))
+        .catch((err) => console.error("Error fetching post:", err));
+    }
+  }, [id]);
+
+  if (!post) return <div>Loading...</div>;
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">{post.title}</h1>
+      <p>{post.content}</p>
+    </div>
+  );
+};
+
+export default page;
