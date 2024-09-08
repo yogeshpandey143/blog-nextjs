@@ -1,4 +1,7 @@
 import Link from "next/link"
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 import { cn } from "@/lib/utils";
 import { Spotlight } from "@/Components/ui/Spotlight"
@@ -20,7 +23,7 @@ function HeroSection() {
             className="mt-4 font-normal text-base md:text-lg text-neutral-300 max-w-lg mx-auto"
             >Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam maxime cumque minus, quaerat, necessitatibus dignissimos beatae corporis unde odio omnis assumenda? Ipsum perferendis ipsa maxime reprehenderit animi quas temporibus eligendi.</p>
             <div className="mt-4">
-                <Link href={"/posts"}>
+                <Link href={"/CreatePost"}>
                 <Button
                     borderRadius="1.75rem"
                     className="bg-white dark:bg-black text-black dark:text-white border-neutral-200 dark:border-slate-800"
