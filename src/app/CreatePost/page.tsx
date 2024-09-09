@@ -13,7 +13,7 @@ function Page() {
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/posts', { title, content })
+    axios.post('https://blog-nextjs-backend-a7p1.onrender.com', { title, content })
     .then(() => {
       router.push('/ViewList');
     });
