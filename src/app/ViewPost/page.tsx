@@ -1,6 +1,6 @@
-'use client';  // Ensures the component is client-side only
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+'use client';
+import { Suspense, useEffect, useState } from 'react';
+import {  useSearchParams } from 'next/navigation';
 import axios from 'axios';
 
 interface Post {
@@ -9,14 +9,13 @@ interface Post {
   content: string;
 }
 
-const Page = () => {
-  const [post, setPost] = useState < Post | null >(null);
-  const router = useRouter();
-  const { id } = router.query;  // Extract id from the URL
+const PageContent = () => {
+  const [post, setPost] = useState<Post | null>(null);
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
 
   useEffect(() => {
     if (id) {
-      // Assuming your backend is on localhost:3001, adjust the API path if necessary
       axios.get(`http://localhost:3001/posts/${id}`)
         .then((res) => setPost(res.data))
         .catch((err) => console.error("Error fetching post:", err));
@@ -30,6 +29,14 @@ const Page = () => {
       <h1 className="text-2xl font-bold mb-4">{post.title}</h1>
       <p>{post.content}</p>
     </div>
+  );
+};
+
+const Page = () => {
+  return (
+    <Suspense fallback={<div>Loading page...</div>}>
+      <PageContent />
+    </Suspense>
   );
 };
 
