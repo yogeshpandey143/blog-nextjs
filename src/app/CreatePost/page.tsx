@@ -10,10 +10,10 @@ function Page() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const router = useRouter();
-
+    const url ="https://blog-nextjs-backend-a7p1.onrender.com";
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    axios.post('https://blog-nextjs-backend-a7p1.onrender.com', { title, content })
+    axios.post(url+'/posts', { title, content })
     .then(() => {
       router.push('/ViewList');
     });
