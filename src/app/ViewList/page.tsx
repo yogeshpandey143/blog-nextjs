@@ -14,10 +14,10 @@ interface Post {
 
 const Page = () => {
   const [posts, setPosts] = useState<Post[]>([]);  // State to hold the list of posts
-
+   cost use = "https://blog-nextjs-backend-a7p1.onrender.com";
   // Fetch posts when the component loads
   useEffect(() => {
-    axios.get('http://localhost:3001/posts')  // Use the correct URL for your backend API
+    axios.get(url+'/posts')  // Use the correct URL for your backend API
       .then((res) => {
         setPosts(res.data);  // Ensure you're setting posts directly from the response data
       })
@@ -28,7 +28,7 @@ const Page = () => {
 
   // Function to delete a post by ID
   const deletePost = (id: number) => {
-    axios.delete(`http://localhost:3001/posts/${id}`)  // Use the correct URL for deleting posts
+    axios.delete(url+`/posts/${id}`)  // Use the correct URL for deleting posts
       .then(() => {
         // Remove the post from the state
         setPosts(posts.filter((post) => post.id !== id));
