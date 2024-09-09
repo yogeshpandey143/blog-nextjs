@@ -9,7 +9,7 @@ interface Post {
   content: string;
 }
 
-const page = () => {
+const Page = () => {
   const [post, setPost] = useState < Post | null >(null);
   const router = useRouter();
   const { id } = router.query;  // Extract id from the URL
@@ -33,4 +33,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

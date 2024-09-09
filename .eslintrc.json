@@ -2,7 +2,6 @@
   "extends": ["next/core-web-vitals", "next/typescript"],
 
   "rules": {
-    "rule-name": "off" // Replace "rule-name" with the actual rule you want to disable
-    // Add other rules as needed
-  }
+    "@typescript-eslint/no-explicit-any": "off"
+}
 }
