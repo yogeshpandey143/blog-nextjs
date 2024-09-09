@@ -1,7 +1,7 @@
 import FeaturedBlogs from "@/Components/FeaturedBlogs";
 import Footer from "@/Components/Footer";
 import HeroSection from "@/Components/HeroSection";
-
+export const dynamic = 'force-dynamic';
 
 export default function Home() {
   return (
