@@ -13,10 +13,10 @@ const PageContent = () => {
   const [post, setPost] = useState<Post | null>(null);
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
-
+  const url = "https://blog-nextjs-backend-a7p1.onrender.com"
   useEffect(() => {
     if (id) {
-      axios.get(`http://localhost:3001/posts/${id}`)
+      axios.get(url+`/posts/${id}`)
         .then((res) => setPost(res.data))
         .catch((err) => console.error("Error fetching post:", err));
     }
